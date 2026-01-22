@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionPulse - Men's Sneakers</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* HEADER STYLES */
+        .fashion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .fashion-header-left-section {
+            flex: 0 0 auto;
+        }
+
+        .fashionpulse-logo {
+            height: 40px;
+            display: block;
+        }
+
+        .fashion-mobile-logo {
+            display: none;
+            height: 35px;
+        }
+
+        .fashion-header-middle-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .links span {
+            cursor: pointer;
+            font-weight: 500;
+            color: #333;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+
+        .links span:hover {
+            color: #ff6b6b;
+        }
+
+        .fashion-header-right-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* HAMBURGER MENU */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* MOBILE MENU */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 99;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            max-height: 400px;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .mobile-menu-links span {
+            padding: 15px 10px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            font-weight: 500;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .mobile-menu-links span:hover {
+            background-color: #f8f8f8;
+            color: #ff6b6b;
+        }
+
+        /* SEARCH CONTAINER */
+        .search-container {
+            position: relative;
+            width: 250px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            font-size: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #ff6b6b;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+        }
+
+        .search-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: #666;
+        }
+
+        .search-input:focus + .search-icon svg {
+            fill: #ff6b6b;
+        }
+
+        /* CART */
+        .cart-link {
+            position: relative;
+            text-decoration: none;
+        }
+
+        .cart-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        .cart-quantity {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* ADS BANNER */
+        .ads1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .cta1 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-right: 15px;
+        }
+
+        .now {
+            background-color: white;
+            color: #667eea;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+
+        .now:hover {
+            transform: scale(1.05);
+        }
+
+        /* BREADCRUMB NAVIGATION */
+        .breadcrumb-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 40px;
+            background-color: #f8f8f8;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #666;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb a:hover {
+            color: #ff6b6b;
+        }
+
+        .breadcrumb-separator {
+            color: #999;
+        }
+
+        .breadcrumb-current {
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* MAIN CONTENT LAYOUT */
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+        }
+
+        /* CATEGORY HEADER */
+        .category-header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .category-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .category-count {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* PRODUCTS GRID */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-container {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .product-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+
+        .product-container span {
+            display: block;
+            padding: 15px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .fashion-header-middle-section {
+                display: none;
+            }
+
+            .fashionpulse-logo {
+                display: none;
+            }
+
+            .fashion-mobile-logo {
+                display: block;
+            }
+
+            .search-container {
+                width: 120px;
+            }
+
+            .search-input {
+                font-size: 12px;
+                padding: 8px 10px 8px 35px;
+            }
+
+            .content-wrapper {
+                padding: 15px 20px;
+            }
+
+            .breadcrumb-container {
+                padding: 15px 20px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .product-image {
+                height: 180px;
+            }
+
+            .breadcrumb {
+                font-size: 12px;
+            }
+
+            .category-title {
+                font-size: 20px;
+            }
+
+            .cta1 {
+                font-size: 14px;
+            }
+
+            .now {
+                font-size: 12px;
+                padding: 6px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .fashion-header {
+                padding: 10px 15px;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .product-image {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="fashion-header">
+        <div class="fashion-header-left-section">
+            <a href="index.html" class="header-link">
+                <img class="fashionpulse-logo" src="images/Logo/ski.svg" alt="FashionPulse Logo">
+                <img class="fashion-mobile-logo" src="images/Logo/Logo-mobile.jpg" alt="FashionPulse">
+            </a>
+        </div>
+
+        <nav class="fashion-header-middle-section">
+            <div class="links">
+                <span class="men">Men</span>
+                <span class="women">Women</span>
+                <span class="collections">Collections</span>
+                <span class="sales">Sales</span>
+            </div>
+        </nav>
+
+        <div class="fashion-header-right-section">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="search-container">
+                <input type="search" class="search-input" placeholder="find what you love...">
+                <span class="search-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                </span>
+            </div>
+            <a class="cart-link header-link" href="checkout.html">
+                <img class="cart-icon" src="images/icons/bag-2.jpg" alt="Shopping Cart">
+                <div class="cart-quantity js-cart-quantity">0</div>
+            </a>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-links">
+            <span class="men">Men</span>
+            <span class="women">Women</span>
+            <span class="collections">Collections</span>
+            <span class="sales">Sales</span>
+        </div>
+    </div>
+
+    <!-- ADS BANNER -->
+    <div class="ads1">
+        <span class="cta1">Get 20% off your first order today</span>
+        <span class="now">Order Now!</span>
+    </div>
+
+    <!-- BREADCRUMB NAVIGATION -->
+    <div class="breadcrumb-container">
+        <nav class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="men.html">Men's Fashion</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="shoes.html">Shoes</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">Sneakers</span>
+        </nav>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content-wrapper">
+        <!-- CATEGORY HEADER -->
+        <div class="category-header">
+            <h1 class="category-title">Men's Sneakers</h1>
+            <p class="category-count">12 products found</p>
+        </div>
+
+        <!-- PRODUCTS GRID -->
+        <div class="products-grid js-products-grid">
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-105.jpg" alt="Black Athletic Shoes">
+                <span>Black Athletic Shoes<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-106.jpg" alt="Green Athletic Shoes">
+                <span>Green Athletic Shoes<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-107.jpg" alt="Green Chino Pants">
+                <span>Green Chino Pants<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-108.jpg" alt="Red Duvet Cover">
+                <span>Red Duvet Cover<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-109.jpg" alt="Beige Chino Pants">
+                <span>Beige Chino Pants<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-110.jpg" alt="Black Golf Polo">
+                <span>Black Golf Polo<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-111.jpg" alt="Beige Summer Shorts">
+                <span>Beige Summer Shorts<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-112.jpg" alt="Gold Round Sunglasses">
+                <span>Gold Sunglasses<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-113.jpg" alt="Black Hoodie">
+                <span>Black Hoodie<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-114.jpg" alt="Fleece Zip Hoodie">
+                <span>Fleece Zip Hoodie<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-115.jpg" alt="Red T-Shirt Pack">
+                <span>Red T-Shirt 2-Pack<br>$70</span>
+            </div>
+            <div class="product-container"> 
+                <img class="product-image" src="images/variations/image-116.jpg" alt="Black Ballet Flats">
+                <span>Black Ballet Flats<br>$70</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // HAMBURGER MENU TOGGLE
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking menu items
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links span');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // CART FUNCTIONALITY
+        let cartCount = 0;
+        const cartQuantityElement = document.querySelector('.js-cart-quantity');
+        
+        document.querySelectorAll('.product-container').forEach(product => {
+            product.addEventListener('click', () => {
+                cartCount++;
+                cartQuantityElement.textContent = cartCount;
+                alert('Product added to cart!');
+            });
+        });
+    </script>
+</body>
+</html>
